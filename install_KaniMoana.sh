@@ -102,13 +102,11 @@ sudo cp asound.conf /etc
 echo "Downloading KaniMoana software from GitHub..."
 echo ""
 
-cd /home/pi/kanimoana
+cd /home/pi
 
-sudo wget https://raw.githubusercontent.com/phanleil-blip/KaniMoana/refs/heads/main/scripts/KaniMoana.sh
-sudo chmod +x KaniMoana.sh
+git clone https://github.com/phanleil-blip/KaniMoana.git
 
-sudo wget https://raw.githubusercontent.com/phanleil-blip/KaniMoana/refs/heads/main/scripts/audio_recording.sh
-sudo chmod +x audio_recording.sh
+sudo chmod +x /home/pi/KaniMoana/scripts/*.sh
 
 # ------------------------------------------------------------
 # Edit .bashrc
