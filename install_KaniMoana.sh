@@ -16,7 +16,7 @@ echo ""
 # Update and Upgrade Bullseye OS
 # ------------------------------------------------------------
 
-echo "Updating and upgrading Bullseye OS..."
+echo "Updating and upgrading Bookworm OS..."
 echo ""
 
 sudo apt-get update
@@ -104,10 +104,10 @@ echo ""
 
 cd /home/pi/kanimoana
 
-sudo wget https://raw.githubusercontent.com/cpagniel/KaniMoana/master/software/scripts/KaniMoana.sh
+sudo wget https://raw.githubusercontent.com/phanleil-blip/KaniMoana/refs/heads/main/scripts/KaniMoana.sh
 sudo chmod +x KaniMoana.sh
 
-sudo wget https://raw.githubusercontent.com/cpagniel/KaniMoana/master/software/scripts/audio_recording.sh
+sudo wget https://raw.githubusercontent.com/phanleil-blip/KaniMoana/refs/heads/main/scripts/audio_recording.sh
 sudo chmod +x audio_recording.sh
 
 # ------------------------------------------------------------
