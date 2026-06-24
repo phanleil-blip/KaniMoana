@@ -92,8 +92,11 @@ echo ""
 
 cd /home/pi/kanimoana/config
 
-sudo wget https://raw.githubusercontent.com/cpagniel/KaniMoana/master/software/config/asound.conf
+sudo wget https://raw.githubusercontent.com/phanleil-blip/KaniMoana/main/config/asound.conf
 sudo cp asound.conf /etc
+
+sudo wget https://raw.githubusercontent.com/phanleil-blip/KaniMoana/main/config/schedule.wpi
+sudo cp schedule.wpi /home/pi/wittypi/schedule.wpi
 
 # ------------------------------------------------------------
 # Get KaniMoana Software from GitHub
