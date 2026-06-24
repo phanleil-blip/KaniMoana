@@ -65,7 +65,7 @@ cd /media/DATA && sudo echo "Data stored to:" $USBNAME >> "${RUNFILE}"
 echo ""
 echo "Schedule Next Start-Up:"
 
-cd /home/pi/wittypi/schedules && sudo cp KaniMoana_4m.wpi /home/pi/wittypi/schedule.wpi
+sudo cp /home/pi/kanimoana/config/schedule.wpi /home/pi/wittypi/schedule.wpi
 cd /home/pi/wittypi && sudo ./runScript.sh
 
 echo "RPi scheduled to turn back on the half-hour from KaniMoana.sh"
