@@ -113,6 +113,9 @@ sudo chmod +x KaniMoana.sh
 sudo wget https://raw.githubusercontent.com/phanleil-blip/KaniMoana/refs/heads/main/scripts/audio_recording.sh 
 sudo chmod +x audio_recording.sh
 
+sudo wget https://raw.githubusercontent.com/phanleil-blip/KaniMoana/refs/heads/main/scripts/shutdown_now.sh
+sudo chmod +x shutdown_now.sh
+
 # ------------------------------------------------------------
 # Edit .bashrc
 # ------------------------------------------------------------
