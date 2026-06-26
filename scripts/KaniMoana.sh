@@ -23,6 +23,10 @@ echo "Current Time:" $(date)
 cd /home/pi/kanimoana
 
 sudo mount /dev/sda1 /media/DATA -o uid=pi,gid=pi
+mountpoint -q /media/DATA || {
+  echo "ERROR: USB did not mount at /media/DATA"
+  exit 1
+}
 USBID="sda1" && sudo echo sda1 > usb_id.txt
 USBNAME=$(sudo blkid | grep $USBID | cut -b 27-31)
 
@@ -163,6 +167,11 @@ cd /media/DATA && sudo echo "End Time of KaniMoana.sh" $(date) >> "${RUNFILE}"
 # Exit
 # ------------------------------------------------------------
 
-echo "Exit KaniMoana.sh "
-echo ""
-exit 0
+echo "Syncing files before shutdown..."
+sync
+sleep 5
+
+cd /media/DATA && echo "RPi shutdown at:" $(date) >> "${RUNFILE}"
+cd /media/DATA && echo "" >> "${RUNFILE}"
+
+sudo shutdown -h now
