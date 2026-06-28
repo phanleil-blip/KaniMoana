@@ -144,7 +144,7 @@ if [ $(cat usb_space.txt) -ge 494085041152 ]; then
     sudo rm usb_id.txt && sudo echo FULL > usb_id.txt
     sudo umount -f /dev/$USBID
 
-    $USBNAME="Native"
+    USBNAME="Native"
 
     cd /media && mkdir DATA
     cd /media/DATA
