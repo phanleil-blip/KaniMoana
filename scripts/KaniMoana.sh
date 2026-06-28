@@ -22,7 +22,7 @@ echo "Current Time:" $(date)
 
 cd /home/pi/kanimoana
 
-USBDEV=$(lsblk -lnpo NAME,TYPE | awk '$2=="part"{print $1; exit}')
+USBDEV=$(lsblk -lnpo NAME,TYPE,TRAN | awk '$2=="part" && $3=="usb"{print $1; exit}')
 
 if [ -z "$USBDEV" ]; then
   echo "ERROR: No USB partition found"
