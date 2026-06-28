@@ -119,7 +119,7 @@ sudo ./audio_recording.sh
 # Check USB space
 # ------------------------------------------------------------
 
-cd /home/pi/kanimoana && sudo rm usb_space.txt
+cd /home/pi/kanimoana && sudo rm -f usb_space.txt
 du -s /media/DATA | grep -o -E '[0-9]+' > /home/pi/kanimoana/usb_space.txt
 
 cd /home/pi/kanimoana
@@ -127,21 +127,21 @@ if [ $(cat usb_space.txt) -ge 494085041152 ]; then
   echo ""
   echo $USBNAME "is full"
   if [ $USBID = "sda1" ]; then
-    sudo rm usb_id.txt && sudo echo sdb1 > usb_id.txt
+    sudo rm -f usb_id.txt && sudo echo sdb1 > usb_id.txt
     sudo umount -f /dev/$USBID
 
     USBID=$(cat usb_id.txt)
     sudo mount /dev/$USBID /media/DATA -o uid=pi,gid=pi
     USBNAME=$(sudo blkid | grep $USBID | cut -b 19-23)
   elif [ $USBID = "sdb1" ]; then
-    sudo rm usb_id.txt && sudo echo sdc1 > usb_id.txt
+    sudo rm -f usb_id.txt && sudo echo sdc1 > usb_id.txt
     sudo umount -f /dev/$USBID
 
     USBID=$(cat usb_id.txt)
     sudo mount /dev/$USBID /media/DATA -o uid=pi,gid=pi
     USBNAME=$(sudo blkid | grep $USBID | cut -b 19-23)
   elif [ $USBID = "sdc1" ]; then
-    sudo rm usb_id.txt && sudo echo FULL > usb_id.txt
+    sudo rm -f usb_id.txt && sudo echo FULL > usb_id.txt
     sudo umount -f /dev/$USBID
 
     USBNAME="Native"
