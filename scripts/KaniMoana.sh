@@ -22,22 +22,9 @@ echo "Current Time:" $(date)
 
 cd /home/pi/kanimoana
 
-USBDEV=$(lsblk -lnpo NAME,TYPE | awk '$2=="part" && $1 !~ /mmcblk/{print $1; exit}')
-
-if [ -z "$USBDEV" ]; then
-  echo "ERROR: No USB partition found"
-  exit 1
-fi
-
-sudo mount "$USBDEV" /media/DATA -o uid=pi,gid=pi
-
-mountpoint -q /media/DATA || {
-  echo "ERROR: USB did not mount at /media/DATA"
-  exit 1
-}
-USBID=$(basename "$USBDEV")
-echo "$USBID" > usb_id.txt
-USBNAME=$(basename "$USBDEV")
+sudo mount /dev/sda1 /media/DATA -o uid=pi,gid=pi
+USBID="sda1" && sudo echo sda1 > usb_id.txt
+USBNAME=$(sudo blkid | grep $USBID | cut -b 27-31)
 
 # ------------------------------------------------------------
 # Create .log file
