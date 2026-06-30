@@ -36,7 +36,14 @@ cd /media/DATA && sudo echo "Start Time of audio capture:" $(date) >> "${RUNFILE
 
 cd /media/DATA
 
-arecord -D sysdefault:CARD=sndrpihifiberry -r 48000 -d 1560 -f S16_LE -t wav -V mono KaniMoana3.$(date +%y%m%d%H%M%S).wav
+FILENAME="KaniMoana3.$(date +%y%m%d%H%M%S).wav"
+
+echo "Recording to $FILENAME" >> "${RUNFILE}"
+
+arecord -D sysdefault:CARD=sndrpihifiberry -r 48000 -d 1560 -f S16_LE -t wav -V mono "$FILENAME"
+
+ARECORD_EXIT=$?
+echo "arecord exit code: $ARECORD_EXIT" >> "${RUNFILE}"
 
 # ------------------------------------------------------------
 # Ending audio capture...
