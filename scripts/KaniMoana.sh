@@ -59,19 +59,6 @@ cd /media/DATA && echo "Data stored to:" $USBNAME
 cd /media/DATA && sudo echo "Data stored to:" $USBNAME >> "${RUNFILE}"
 
 # ------------------------------------------------------------
-# Schedule Next Start-Up
-# ------------------------------------------------------------
-
-echo ""
-echo "Schedule Next Start-Up:"
-
-cd /home/pi/wittypi/schedules && sudo cp KaniMoana_4m.wpi /home/pi/wittypi/schedule.wpi
-cd /home/pi/wittypi && sudo ./runScript.sh
-
-echo "RPi scheduled to turn back on the half-hour from KaniMoana.sh"
-cd /media/DATA && echo "RPi scheduled to turn back on half-hour from KaniMoana.sh at:" $(date) >> "${RUNFILE}"
-
-# ------------------------------------------------------------
 # Get Input and Output Voltage
 # ------------------------------------------------------------
 
@@ -115,7 +102,7 @@ sudo ./audio_recording.sh
 # Check USB space
 # ------------------------------------------------------------
 
-cd /home/pi/kanimoana && sudo rm usb_space.txt
+cd /home/pi/kanimoana && sudo rm -f usb_space.txt
 du -s /media/DATA | grep -o -E '[0-9]+' > /home/pi/kanimoana/usb_space.txt
 
 cd /home/pi/kanimoana
@@ -123,24 +110,24 @@ if [ $(cat usb_space.txt) -ge 494085041152 ]; then
   echo ""
   echo $USBNAME "is full"
   if [ $USBID = "sda1" ]; then
-    sudo rm usb_id.txt && sudo echo sdb1 > usb_id.txt
+    sudo rm -f usb_id.txt && sudo echo sdb1 > usb_id.txt
     sudo umount -f /dev/$USBID
 
     USBID=$(cat usb_id.txt)
     sudo mount /dev/$USBID /media/DATA -o uid=pi,gid=pi
     USBNAME=$(sudo blkid | grep $USBID | cut -b 19-23)
   elif [ $USBID = "sdb1" ]; then
-    sudo rm usb_id.txt && sudo echo sdc1 > usb_id.txt
+    sudo rm -f usb_id.txt && sudo echo sdc1 > usb_id.txt
     sudo umount -f /dev/$USBID
 
     USBID=$(cat usb_id.txt)
     sudo mount /dev/$USBID /media/DATA -o uid=pi,gid=pi
     USBNAME=$(sudo blkid | grep $USBID | cut -b 19-23)
   elif [ $USBID = "sdc1" ]; then
-    sudo rm usb_id.txt && sudo echo FULL > usb_id.txt
+    sudo rm -f usb_id.txt && sudo echo FULL > usb_id.txt
     sudo umount -f /dev/$USBID
 
-    $USBNAME="Native"
+    USBNAME="Native"
 
     cd /media && mkdir DATA
     cd /media/DATA
@@ -148,6 +135,19 @@ if [ $(cat usb_space.txt) -ge 494085041152 ]; then
 fi
 
 cd /media/DATA && echo "" >> "${RUNFILE}"
+
+# ------------------------------------------------------------
+# Schedule Next Start-Up
+# ------------------------------------------------------------
+
+echo ""
+echo "Schedule Next Start-Up:"
+
+sudo cp /home/pi/kanimoana/config/schedule.wpi /home/pi/wittypi/schedule.wpi
+cd /home/pi/wittypi && sudo ./runScript.sh
+
+echo "RPi scheduled to turn back on the half-hour from KaniMoana.sh"
+cd /media/DATA && echo "RPi scheduled to turn back on half-hour from KaniMoana.sh at:" $(date) >> "${RUNFILE}"
 
 # ------------------------------------------------------------
 # Cleanup
@@ -163,6 +163,11 @@ cd /media/DATA && sudo echo "End Time of KaniMoana.sh" $(date) >> "${RUNFILE}"
 # Exit
 # ------------------------------------------------------------
 
-echo "Exit KaniMoana.sh "
-echo ""
-exit 0
+echo "Syncing files before shutdown..."
+sync
+sleep 5
+
+cd /media/DATA && echo "RPi shutdown at:" $(date) >> "${RUNFILE}"
+cd /media/DATA && echo "" >> "${RUNFILE}"
+
+sudo shutdown -h now
