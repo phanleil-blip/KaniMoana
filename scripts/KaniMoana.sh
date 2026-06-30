@@ -59,19 +59,6 @@ cd /media/DATA && echo "Data stored to:" $USBNAME
 cd /media/DATA && sudo echo "Data stored to:" $USBNAME >> "${RUNFILE}"
 
 # ------------------------------------------------------------
-# Schedule Next Start-Up
-# ------------------------------------------------------------
-
-echo ""
-echo "Schedule Next Start-Up:"
-
-sudo cp /home/pi/kanimoana/config/schedule.wpi /home/pi/wittypi/schedule.wpi
-cd /home/pi/wittypi && sudo ./runScript.sh
-
-echo "RPi scheduled to turn back on the half-hour from KaniMoana.sh"
-cd /media/DATA && echo "RPi scheduled to turn back on half-hour from KaniMoana.sh at:" $(date) >> "${RUNFILE}"
-
-# ------------------------------------------------------------
 # Get Input and Output Voltage
 # ------------------------------------------------------------
 
@@ -148,6 +135,19 @@ if [ $(cat usb_space.txt) -ge 494085041152 ]; then
 fi
 
 cd /media/DATA && echo "" >> "${RUNFILE}"
+
+# ------------------------------------------------------------
+# Schedule Next Start-Up
+# ------------------------------------------------------------
+
+echo ""
+echo "Schedule Next Start-Up:"
+
+sudo cp /home/pi/kanimoana/config/schedule.wpi /home/pi/wittypi/schedule.wpi
+cd /home/pi/wittypi && sudo ./runScript.sh
+
+echo "RPi scheduled to turn back on the half-hour from KaniMoana.sh"
+cd /media/DATA && echo "RPi scheduled to turn back on half-hour from KaniMoana.sh at:" $(date) >> "${RUNFILE}"
 
 # ------------------------------------------------------------
 # Cleanup
