@@ -40,9 +40,13 @@ FILENAME="KaniMoana3.$(date +%y%m%d%H%M%S).wav"
 
 echo "Recording to $FILENAME" >> "${RUNFILE}"
 
+echo "===== BEFORE ARECORD ===== $(date)" >> "${RUNFILE}"
+echo "Recording to ${FILENAME}" >> "${RUNFILE}"
+
 arecord -D sysdefault:CARD=sndrpihifiberry -r 48000 -d 1560 -f S16_LE -t wav -V mono "$FILENAME"
 
 ARECORD_EXIT=$?
+echo "===== AFTER ARECORD ===== $(date)" >> "${RUNFILE}"
 echo "arecord exit code: $ARECORD_EXIT" >> "${RUNFILE}"
 
 # ------------------------------------------------------------
