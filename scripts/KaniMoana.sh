@@ -35,6 +35,10 @@ echo "Create .log"
 
 RUNFILE="KaniMoana3.log"
 
+DEBUGLOG="/home/pi/KaniMoana_debug.log"
+exec > >(tee -a "$DEBUGLOG") 2>&1
+echo "===== KaniMoana DEBUG START $(date) ====="
+
 cd /media/DATA && echo "Start Time of KaniMoana.sh" $(date) >> "${RUNFILE}"
 
 # ------------------------------------------------------------
@@ -95,8 +99,13 @@ cd /media/DATA && sudo echo "wittyPi Output Current at" $(date +%T)":" $c_out >>
 # Audio Recording for 26 minutes
 # ------------------------------------------------------------
 
+echo "===== BEFORE audio_recording.sh $(date) ====="
 cd /home/pi/kanimoana
 sudo ./audio_recording.sh
+AUDIO_EXIT=$?
+echo "===== AFTER audio_recording.sh $(date) ====="
+echo "audio_recording.sh exit code: $AUDIO_EXIT"
+cd /media/DATA && echo "audio_recording.sh exit code: $AUDIO_EXIT at $(date)" >> "${RUNFILE}"
 
 # ------------------------------------------------------------
 # Check USB space
@@ -142,6 +151,9 @@ cd /media/DATA && echo "" >> "${RUNFILE}"
 
 echo ""
 echo "Schedule Next Start-Up:"
+
+echo "===== BEFORE schedule copy $(date) ====="
+cd /media/DATA && echo "BEFORE schedule copy at $(date)" >> "${RUNFILE}"
 
 sudo cp /home/pi/kanimoana/config/schedule.wpi /home/pi/wittypi/schedule.wpi
 cd /home/pi/wittypi && sudo ./runScript.sh
