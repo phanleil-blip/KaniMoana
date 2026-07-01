@@ -156,6 +156,10 @@ echo "===== BEFORE schedule copy $(date) ====="
 cd /media/DATA && echo "BEFORE schedule copy at $(date)" >> "${RUNFILE}"
 
 sudo cp /home/pi/kanimoana/config/schedule.wpi /home/pi/wittypi/schedule.wpi
+
+echo "===== BEFORE runScript.sh $(date) ====="
+cd /media/DATA && echo "BEFORE runScript.sh at $(date)" >> "${RUNFILE}"
+
 cd /home/pi/wittypi && sudo ./runScript.sh
 
 echo "RPi scheduled to turn back on the half-hour from KaniMoana.sh"
@@ -178,6 +182,9 @@ cd /media/DATA && sudo echo "End Time of KaniMoana.sh" $(date) >> "${RUNFILE}"
 echo "Syncing files before shutdown..."
 sync
 sleep 5
+
+echo "===== BEFORE shutdown $(date) ====="
+cd /media/DATA && echo "BEFORE shutdown at $(date)" >> "${RUNFILE}"
 
 cd /media/DATA && echo "RPi shutdown at:" $(date) >> "${RUNFILE}"
 cd /media/DATA && echo "" >> "${RUNFILE}"
